@@ -42,6 +42,7 @@ namespace PowerInBand
 		for (unsigned long i = 0; i < len; i++)
 		{
 			vReal[i] = samples[i];
+			vImag[i] = 0.0; // required to prevent looping in arduinoFFT
 		}
 
 		// Window the data using specified method
@@ -60,9 +61,9 @@ namespace PowerInBand
 
 		// Compute the power in band using rectangles
 		double power = 0.0;
-		for (unsigned long i = lower_index; i <= upper_index; i++)
+		for (unsigned long i = lower_index; i < upper_index; i++)
 		{
-			power += (vReal[i] * freq_res);
+			power += vReal[i] * freq_res;
 		}
 
 		return power;

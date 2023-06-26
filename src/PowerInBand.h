@@ -1,5 +1,5 @@
 #pragma once
-#include "../arduinoFFT/src/arduinoFFT.h"
+#include "arduinoFFT.h"
 #ifdef CORE_CM7 
 #include "SDRAM.h"
 #endif
