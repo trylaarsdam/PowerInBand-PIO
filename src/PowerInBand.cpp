@@ -44,13 +44,27 @@ namespace PowerInBand
 			vReal[i] = samples[i];
 		}
 
-		// Window the data using Welch's method
+		// Window the data using specified method
 		FFT.Windowing(window_method, FFT_FORWARD);
 		// Compute FFT
 		FFT.Compute(FFT_FORWARD);
 		// Convert to magnitude
 		FFT.ComplexToMagnitude();
 
-		return 0.0;
+		// Compute the frequency resolution
+		double freq_res = sampling_freq / len;
+
+		// Compute the lower and upper indices of the band
+		unsigned long lower_index = (unsigned long)(lower_freq / freq_res);
+		unsigned long upper_index = (unsigned long)(upper_freq / freq_res);
+
+		// Compute the power in band using rectangles
+		double power = 0.0;
+		for (unsigned long i = lower_index; i <= upper_index; i++)
+		{
+			power += (vReal[i] * freq_res);
+		}
+
+		return power;
 	}
 }
