@@ -1,0 +1,3 @@
+[submodule "arduinoFFT"]
+	path = arduinoFFT
+	url = https://github.com/kosme/arduinoFFT.git
