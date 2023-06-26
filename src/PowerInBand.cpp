@@ -66,6 +66,22 @@ namespace PowerInBand
 			power += vReal[i] * freq_res;
 		}
 
+		#ifdef CORE_CM7
+		if(use_SDRAM)
+		{
+			SDRAM.free(vReal);
+			SDRAM.free(vImag);
+		}
+		else
+		{
+			delete[] vReal;
+			delete[] vImag;
+		}
+		#else
+		delete[] vReal;
+		delete[] vImag;
+		#endif
+
 		return power;
 	}
 }
