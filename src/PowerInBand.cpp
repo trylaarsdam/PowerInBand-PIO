@@ -2,6 +2,34 @@
 
 namespace PowerInBand 
 {
+	void FFT(double* data, unsigned long len, double sampling_freq)
+	{
+		double* vImag = (double*)malloc(len * sizeof(double));
+
+		arduinoFFT FFT = arduinoFFT(data, vImag, len, sampling_freq);
+		FFT.Windowing(FFT_WIN_TYP_WELCH, FFT_FORWARD);
+		FFT.Compute(FFT_FORWARD);
+		FFT.ComplexToMagnitude();
+
+		delete[] vImag;
+	}
+
+	double PowerInBand(double* data, unsigned long len, double sampling_freq, double lower_freq, double upper_freq)
+	{
+		double freq_res = sampling_freq / len;
+
+		unsigned long lower_index = (unsigned long)(lower_freq / freq_res);
+		unsigned long upper_index = (unsigned long)(upper_freq / freq_res);
+
+		double power = 0.0;
+		for (unsigned long i = lower_index; i < upper_index; i++)
+		{
+			power += (data[i] * freq_res);
+		}
+
+		return power;
+	}
+
 	double Compute(double *samples, unsigned long len, double sampling_freq, double lower_freq, double upper_freq)
 	{
 		return Compute(samples, len, sampling_freq, lower_freq, upper_freq, FFT_WIN_TYP_WELCH);

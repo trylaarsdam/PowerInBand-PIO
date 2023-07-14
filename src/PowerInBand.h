@@ -6,6 +6,22 @@
 
 namespace PowerInBand
 {
+	/// @brief Computes the FFT of the given sample buffer
+	/// @note This function will perform the transform on the given data in place
+	/// @param data Pointer to the raw data
+	/// @param len Amount of data to be computed - this *must* be a power of 2
+	/// @param sampling_freq Sampling frequency of the data
+	void FFT(double* data, unsigned long len, double sampling_freq);
+
+	/// @brief Computes the power in band of the given sample buffer
+	/// @param data Pointer to the FFTed data
+	/// @param len Amount of data to be computed - this *must* be a power of 2
+	/// @param sampling_freq Sampling frequency of the data
+	/// @param lower_freq Lower frequency of the band
+	/// @param upper_freq Upper frequency of the band
+	/// @return The power in band of the specified frequency range
+	double PowerInBand(double* data, unsigned long len, double sampling_freq, double lower_freq, double upper_freq);
+
 	/// @brief Computers the power in band of the given sample buffer using the default of Welch's method for windowing, and SRAM
 	/// @param samples Pointer to the raw data
 	/// @param len Amount of data to be computed - this *must* be a power of 2
